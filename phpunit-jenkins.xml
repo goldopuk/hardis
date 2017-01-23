@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="bootstrap.php">
+	<php>
+		<server name="STAYZEN_ENV" value="phpunit-jenkins"/>
+	</php>
+	<testsuites>
+		<testsuite name="Stayzen Suite">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+
+	<logging>
+		<log type="coverage-clover" target="gen/logs/clover.xml"/>
+		<log type="coverage-html" target="gen/coverage" title="Stayzen"/>
+		<log type="junit" target="gen/logs/junit.xml"/>
+	</logging>
+</phpunit>

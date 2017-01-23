@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="user2user" version="1.1">
+ <types>
+  <fieldType name="uuid" class="solr.UUIDField"/>
+  <fieldType name="long" class="solr.LongField"/>
+  <fieldType name="int" class="solr.IntField"/>
+  <fieldType name="text" class="solr.TextField">
+     <analyzer>
+	<tokenizer 	class="solr.KeywordTokenizerFactory"/>
+	<filter 	class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+ </types>
+ <fields>
+    <field name="iduser2user"		type="uuid"	indexed="true"  stored="true"/>
+    <field name="iduser1"		type="uuid"	indexed="true"  stored="true"/>
+    <field name="iduser2"		type="uuid"	indexed="true"  stored="true"/>
+    <field name="created"		type="long"	indexed="true"  stored="true"/>
+    <field name="status"		type="int" 	indexed="true"  stored="true"/>
+ </fields>
+
+<defaultSearchField>iduser1</defaultSearchField>
+<uniqueKey>iduser2user</uniqueKey>
+
+</schema>

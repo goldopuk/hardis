@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="usersearch" version="1.1">
+ <types>
+  <fieldType name="uuid" class="solr.UUIDField"/>
+  <fieldType name="text" class="solr.TextField">
+    <analyzer>
+	<tokenizer class="solr.StandardTokenizerFactory"/>
+	<filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+  </fieldType>
+ </types>
+ <fields>
+    <field name="iduser"  	type="uuid" indexed="true"  stored="true"/>
+    <field name="username"  type="text" indexed="true"  stored="true"/>
+    <field name="firstname" type="text" indexed="true"  stored="true"/>
+    <field name="lastname" 	type="text" indexed="true"  stored="true"/>
+ </fields>
+<defaultSearchField>username</defaultSearchField>
+<uniqueKey>iduser</uniqueKey>
+</schema>

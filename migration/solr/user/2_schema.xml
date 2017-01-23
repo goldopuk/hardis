@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="user" version="1.1">
+ <types>
+  <fieldType name="uuid" class="solr.UUIDField"/>
+  <fieldType name="trielong" class="solr.TrieLongField"/>
+  <fieldType name="long" class="solr.LongField"/>
+  <fieldType name="int" class="solr.IntField"/>
+  <fieldType name="trie" class="solr.TrieIntField"/>
+  <fieldType name="text" class="solr.TextField">
+    <analyzer>
+	<tokenizer class="solr.StandardTokenizerFactory"/>
+	<filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+ </types>
+ <fields>
+    <field name="iduser"  	type="uuid" indexed="true"  stored="true"/>
+    <field name="username"  	type="text" indexed="true"  stored="true"/>
+    <field name="firstname" 	type="text" indexed="true"  stored="true"/>
+    <field name="lastname" 	type="text" indexed="true"  stored="true"/>
+    <field name="city"  	type="text" indexed="false" stored="true"/>
+    <field name="lastaccess"  	type="long" indexed="true"  stored="false"/>
+    <field name="birthday"  	type="long" indexed="false" stored="true"/>
+    <field name="status"  	type="int"  indexed="true"  stored="false"/>
+    <field name="idfacebook"  	type="text" indexed="true"  stored="false"/>
+    <field name="email" 	type="text" indexed="true"  stored="false"/>
+    <field name="likes"  	type="int"  indexed="true"  stored="false"/>
+    <field name="shares"  	type="int"  indexed="true"  stored="false"/>
+    <field name="views"  	type="int"  indexed="true"  stored="false"/>
+    <field name="photo"  	type="text" indexed="false" stored="true"/>
+    <field name="country" 	type="text" indexed="false" stored="true"/>
+ </fields>
+
+<defaultSearchField>username</defaultSearchField>
+<uniqueKey>iduser</uniqueKey>
+
+</schema>

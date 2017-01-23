@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="theme" version="1.1">
+ <types>
+  <fieldType name="uuid" class="solr.UUIDField"/>
+  <fieldType name="long" class="solr.LongField"/>
+  <fieldType name="int" class="solr.IntField"/>
+  <fieldType name="text" class="solr.TextField">
+     <analyzer>
+	<tokenizer 	class="solr.KeywordTokenizerFactory"/>
+	<filter 	class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+ </types>
+ <fields>
+    <field name="idtheme"  	 type="long" indexed="true"   stored="true"/>
+    <field name="name"       type="text" indexed="true"   stored="true"/>
+    <field name="isactive"   type="int"  indexed="true"   stored="false"/>
+	<field name="themeorder" type="int"  indexed="false"  stored="true"/>
+	<field name="gatag"      type="text" indexed="false"  stored="true"/>
+	<field name="slug"       type="text" indexed="true"   stored="true"/>
+ </fields>
+
+<defaultSearchField>name</defaultSearchField>
+<uniqueKey>idtheme</uniqueKey>
+
+</schema>

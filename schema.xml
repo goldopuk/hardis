@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="partyinvite" version="1.1">
+ <types>
+  <fieldType name="uuid" class="solr.UUIDField"/>
+  <fieldType name="long" class="solr.LongField"/>
+  <fieldType name="int" class="solr.IntField"/>
+  <fieldType name="text" class="solr.TextField">
+     <analyzer>
+     <tokenizer  class="solr.KeywordTokenizerFactory"/>
+     <filter     class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+ </types>
+ <fields>
+    <field name="idpartyinvite" 	type="uuid" indexed="true"   stored="true"/>
+    <field name="iduser" 		type="uuid" indexed="true"   stored="true"/>
+    <field name="firstname"  		type="text" indexed="true"   stored="true"/>
+    <field name="lastname"   		type="text" indexed="true"   stored="true"/>
+    <field name="guestemail" 		type="text" indexed="true"   stored="true"/>
+    <field name="email"      		type="text" indexed="true"   stored="true"/>
+    <field name="created"    		type="long" indexed="true"   stored="true"/>
+    <field name="company" 	       	type="text" indexed="true"  stored="true"/>
+    <field name="phone" 	       	type="text" indexed="true"  stored="true"/> 
+    <field name="confirmed"        	type="int" indexed="true"  stored="true"/> 
+    <field name="phoneconfirmed"   	type="int" indexed="true"  stored="true"/> 
+    <field name="phonetrycount"    	type="text" indexed="true"  stored="true"/> 
+    <field name="fromsite"         	type="int" indexed="true"  stored="true"/> 
+    <field name="confirmationcode" 	type="text" indexed="true"  stored="true"/> 
+    <field name="activated"        	type="long" indexed="true"  stored="true"/> 
+    <field name="guestfirstname"   	type="text" indexed="true"  stored="true"/>
+    <field name="guestlastname"    	type="text" indexed="true"  stored="true"/>
+    <field name="occupation"    	type="text" indexed="true"  stored="true"/>
+ </fields>
+
+<defaultSearchField>firstname</defaultSearchField>
+<uniqueKey>idpartyinvite</uniqueKey>
+
+</schema>

@@ -1,0 +1,830 @@
+dbsite:
+  user:
+    tablename: user
+    primary:  iduser
+    columns:
+      iduser:       { type: uuid }
+      username:     { type: text }
+      firstname:    { type: text }
+      email:        { type: text }
+      gender:       { type: text }
+      lastname:     { type: text }
+      password:     { type: text }
+      lastaccess:   { type: timestamp }
+      created:      { type: timestamp }
+      updated:      { type: timestamp }
+      photo:        { type: text }
+      birthday:     { type: timestamp }
+      country:      { type: text }
+      salt:         { type: text }
+      city:         { type: text }
+      locale:       { type: text }
+      languages:    { type: text }
+      status:       { type: int }
+      idcovermovie: { type: uuid }
+      idfacebook:   { type: text }
+      moodmessage:  { type: text}
+      shares:       { type: int}
+      likes:        { type: int}
+      views:        { type: int}
+      idinstagram:  { type: text }
+      idvimeo:      { type: text }
+      idflickr:     { type: text }
+      religion:     { type: text }
+      relationshipstatus: { type: text }
+      role:         { type: text }
+      viewtour:     { type: int}
+      friends:      { type: int}
+      notifications: { type: int}
+
+  usertemp:
+    tablename: usertemp
+    primary:  iduser
+    columns:
+      iduser:       { type: uuid }
+      username:     { type: text }
+      firstname:    { type: text }
+      email:        { type: text }
+      gender:       { type: text }
+      lastname:     { type: text }
+      password:     { type: text }
+      lastaccess:   { type: timestamp }
+      created:      { type: timestamp }
+      updated:      { type: timestamp }
+      photo:        { type: text }
+      birthday:     { type: timestamp }
+      country:      { type: text }
+      salt:         { type: text }
+      city:         { type: text }
+      locale:       { type: text }
+      languages:    { type: text }
+      status:       { type: int }
+      idcovermovie: { type: uuid }
+      idfacebook:   { type: text }
+      moodmessage:  { type: text}
+      shares:       { type: int}
+      likes:        { type: int}
+      views:        { type: int}
+      idinstagram:  { type: text }
+      idvimeo:      { type: text }
+      idflickr:     { type: text }
+      religion:     { type: text }
+      relationshipstatus: { type: text }
+      role:         { type: text }
+      viewtour:     { type: int}
+      friends:      { type: int}
+
+  usersearch:
+    tablename: usersearch
+    primary:  iduser
+    columns:
+      iduser:       { type: uuid }
+      username:     { type: text }
+      firstname:    { type: text }
+      lastname:     { type: text }
+
+  timeline:
+    tablename: timeline
+    primary: [ iduser, created ]
+    columns:
+      iduser:       { type: uuid }
+      created:      { type: timestamp }
+      objectid:     { type: text }
+      objecttype:   { type: text }
+      metadata:     { type: json }
+      related:      { type: uuid }
+
+  usertoken:
+    tablename: usertoken
+    primary: [ iduser, socialnetwork ]
+    columns:
+      iduser:        { type: uuid }
+      uid:           { type: text }
+      secret:        { type: text }
+      socialnetwork: { type: text }
+      accesstoken:   { type: text }
+      expire:        { type: timestamp }
+      data:          { type: json }
+      appid:         { type: text }
+
+  timelinecore:
+    tablename: timelinecore
+    primary: idtimelinecore
+    columns:
+      idtimelinecore:  { type: uuid }
+      iduser:          { type: uuid }
+      timelinecreated: { type: timestamp }
+      objectid:        { type: text }
+      objecttype:      { type: text }
+      metadata:        { type: json }
+      related:         { type: uuid }
+
+  friendshiprequest:
+    tablename: friendshiprequest
+    primary: [ iduser, idrequester ]
+    columns:
+      iduser:       { type: uuid }
+      idrequester:  { type: uuid }
+      created:      { type: timestamp }
+      status:       { type: int }
+
+  friendshiprequestcore:
+    tablename: friendshiprequestcore
+    primary: [ iduser, friendshiprequestcreated ]
+    columns:
+      iduser:                   { type: uuid }
+      friendshiprequestcreated: { type: timestamp }
+      idrequester:              { type: uuid }
+
+  usersession:
+    tablename: usersession
+    primary: idusersession
+    columns:
+      idusersession:  { type: uuid }
+      iduser:         { type: uuid }
+      created:        { type: timestamp }
+      ipaddress:      { type: text }
+      useragent:      { type: text }
+      lastactivity:   { type: timestamp }
+      sessionid:      { type: text }
+
+  movie:
+    tablename: movie
+    primary: idmovie
+    columns:
+      idmovie:      { type: uuid }
+      iduser:       { type: uuid }
+      slug:         { type: text }
+      created:      { type: timestamp }
+      updated:      { type: timestamp }
+      title:        { type: text }
+      duration:     { type: int }
+      synopsis:     { type: text }
+      idgenre:      { type: bigint }
+      idtheme:      { type: bigint }
+      idsubtheme:   { type: bigint }
+      tags:         { type: text }
+      likes:        { type: int }
+      shares:       { type: int }
+      views:        { type: int }
+      guidmovie:    { type: text }
+      videourl:     { type: text }
+      permission:   { type: int }
+      isstored:     { type: int }
+      lastplay:     { type: bigint }
+      recipe:       { type: text }
+      status:       { type: int }
+      idtemplate:   { type: text }
+      bestof:       { type: timestamp }
+      usednetworks: { type: text }
+      idjob:        { type: uuid }
+      tagged:       { type: text }
+      bidata:       { type: json }
+      publicated:   { type: timestamp }
+      idcustomer:   { type: bigint }
+      idcampaign:   { type: uuid }
+
+  movietemp:
+    tablename: movietemp
+    primary: idmovie
+    columns:
+      idmovie:      { type: uuid }
+      iduser:       { type: uuid }
+      slug:         { type: text }
+      created:      { type: timestamp }
+      updated:      { type: timestamp }
+      title:        { type: text }
+      duration:     { type: int }
+      synopsis:     { type: text }
+      idgenre:      { type: bigint }
+      idtheme:      { type: bigint }
+      idsubtheme:   { type: bigint }
+      tags:         { type: text }
+      likes:        { type: int }
+      shares:       { type: int }
+      views:        { type: int }
+      guidmovie:    { type: text }
+      videourl:     { type: text }
+      permission:   { type: int }
+      isstored:     { type: int }
+      lastplay:     { type: bigint }
+      recipe:       { type: text }
+      status:       { type: int }
+      idtemplate:   { type: text }
+      bestof:       { type: timestamp }
+      usednetworks: { type: text }
+      idjob:        { type: uuid }
+      tagged:       { type: text }
+      bidata:       { type: json }
+
+  moviesearch:
+    tablename: moviesearch
+    primary: idmovie
+    columns:
+      idmovie:      { type: uuid }
+      title:        { type: text }
+      synopsis:     { type: text }
+      permission:   { type: int }
+      status:       { type: int }
+      created:      { type: timestamp }
+      iduser:       { type: uuid }
+      idgenre:      { type: int }
+      publicated:   { type: timestamp }
+      idcampaign:   { type: uuid }
+
+  moviecomment:
+    tablename: moviecomment
+    primary: [ idmovie, commentcreated ]
+    columns:
+      idmovie:        { type: uuid }
+      commentcreated: { type: timestamp }
+      iduser:         { type: uuid }
+      idmoviecommentcore:  { type: uuid }
+      created:        { type: timestamp }
+      comment:        { type: text }
+      name:           { type: text }
+
+  moviecommentcore:
+    tablename: moviecommentcore
+    primary: idmoviecommentcore
+    columns:
+      idmoviecommentcore: { type: uuid}
+      idmovie:        { type: uuid }
+      iduser:         { type: uuid }
+      created:        { type: timestamp }
+      updated:        { type: timestamp }
+      comment:        { type: text }
+      status:         { type: int }
+
+  userfriends:
+    tablename: userfriends
+    primary: [ iduser, idfriend ]
+    columns:
+      iduser:       { type: uuid }
+      idfriend:     { type: uuid }
+      friendname:   { type: text }
+      created:      { type: timestamp }
+      status:       { type: int }
+      iduser2user:   { type: uuid }
+
+  job:
+    tablename: job
+    primary: idjob
+    columns:
+      idjob:          { type: uuid }
+      iduser:         { type: uuid }
+      data:           { type: json }
+      jobtype:        { type: text }
+      source:         { type: text }
+      created:        { type: timestamp }
+      updated:        { type: timestamp }
+      status:         { type: text }
+      progress:       { type: int }
+      reason:         { type: text }
+
+  genre:
+    tablename: genre
+    primary: idgenre
+    columns:
+      idgenre:    { type: bigint }
+      slug:       { type: text }
+      name:       { type: text }
+      isactive:   { type: int }
+      genretype:  { type: text }
+      cssclass:   { type: text }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+      genreorder: { type: int }
+      gatag:      { type: text }
+      name_en:    { type: text }
+      name_es:    { type: text }
+      name_fr:    { type: text }
+
+  theme:
+    tablename: theme
+    primary: idtheme
+    columns:
+      idtheme:    { type: bigint }
+      slug:       { type: text   }
+      name:       { type: text }
+      isactive:   { type: int }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+      themeorder: { type: int }
+      gatag:      { type: text }
+      name_en:    { type: text }
+      name_es:    { type: text }
+      name_fr:    { type: text }
+
+  subtheme:
+    tablename: subtheme
+    primary: idsubtheme
+    columns:
+      idsubtheme:  { type: bigint }
+      slug:        { type: text }
+      name:        { type: text }
+      isactive:    { type: int }
+      created:     { type: timestamp }
+      updated:     { type: timestamp }
+      gatag:       { type: text }
+      name_en:     { type: text }
+      name_es:     { type: text }
+      name_fr:     { type: text }
+
+  theme_subtheme:
+    tablename: theme_subtheme
+    primary: [ idtheme, idsubtheme ]
+    columns:
+      idtheme:      { type: bigint }
+      idsubtheme:   { type: bigint }
+      subtheme:     { type: text }
+      jsselector:   { type: text }
+      gatag         { type: text }
+
+  recipe:
+    tablename: recipe
+    primary: idmovie
+    columns:
+      idmovie:    { type: uuid }
+      recipe:     { type: json }
+
+  denounce:
+    tablename: denounce
+    primary: iddenounce
+    columns:
+      iddenounce:      { type: uuid }
+      iduser:          { type: uuid }
+      idmovie:         { type: uuid }
+      iduserdenounced: { type: uuid }
+      reason:          { type: text }
+      description:     { type: text }
+      created:         { type: bigint }
+      updated:         { type: bigint }
+      status:          { type: int }
+
+
+  music:
+    tablename: music
+    primary: idmusic
+    columns:
+      idmusic:     { type: bigint }
+      created:     { type: bigint }
+      updated:     { type: bigint }
+      name:        { type: text }
+      genre:       { type: text }
+      isactive:    { type: int }
+      duration:    { type: int }
+      licencedays: { type: int }
+      extension:   { type: text }
+      location:    { type: text }
+      startdate:   { type: bigint }
+
+  nlsubscriber:
+    tablename: nlsubscriber
+    primary:   idnlsubscriber
+    columns:
+      idnlsubscriber: { type: uuid }
+      created:        { type: bigint }
+      updated:        { type: bigint }
+      email:          { type: text }
+      isactive:       { type: int }
+
+  gallery:
+    tablename: gallery
+    primary:   idmovie
+    columns:
+      idmovie:         { type: uuid }
+      created:         { type: timestamp }
+      updated:         { type: timestamp }
+      bestof:          { type: timestamp }
+      moviecreated:    { type: timestamp }
+      moviepublicated: { type: timestamp }
+
+  notification:
+    tablename: notification
+    primary: idnotification
+    columns:
+      idnotification:  { type: uuid }
+      iduser:          { type: uuid }
+      created:         { type: timestamp }
+      status:          { type: int }
+      notiftype:       { type: text }
+      data:            { type: json }
+
+  notificationcore:
+    tablename: notificationcore
+    primary: [ iduser, notificationcreated ]
+    columns:
+      iduser:              { type: uuid }
+      notificationcreated: { type: timestamp }
+      notiftype:           { type: text }
+      data:                { type: json }
+      idnotification:      { type: uuid }
+      status:              { type: int }
+
+  notificationtype:
+    tablename: notificationtype
+    primary:   idnotificationtype
+    columns:
+      idnotificationtype:  { type: uuid }
+      slug:   { type: text }
+      created: { type: timestamp }
+      updated: { type: timestamp }
+      pt_BR:  { type: text }
+      en_US:  { type: text }
+
+  movielike:
+    tablename: movielike
+    primary:   [idmovie, likeupdated]
+    columns:
+      idmovie:     { type: uuid }
+      likeupdated: { type: timestamp }
+      iduser:      { type: uuid }
+
+  movieshare:
+    tablename: movieshare
+    primary:   [ idmovie, iduser ]
+    columns:
+      idmovie:     { type: uuid }
+      iduser:      { type: uuid }
+      name:        { type: text }
+      created:     { type: timestamp }
+
+  movielikebyuser:
+    tablename: movielikebyuser
+    primary: [iduser , movielikecreated]
+    columns:
+      iduser:           { type: uuid }
+      movielikecreated: { type: timestamp }
+      idmovie:          { type: uuid }
+
+  invite:
+    tablename: invite
+    primary: idinvite
+    columns:
+      idinvite:       { type: uuid }
+      activated:      { type: timestamp }
+      created:        { type: timestamp }
+      emailto:        { type: text }
+      idusercreator:  { type: uuid }
+      iduserreceiver: { type: uuid }
+      ispremium:      { type: int }
+
+  passwordrecover:
+    tablename: passwordrecover
+    primary: idtoken
+    columns:
+      idtoken:   { type: uuid }
+      created:   { type: timestamp }
+      expire:    { type: timestamp }
+      iduser:    { type: uuid }
+      email:     { type: text }
+      secret:    { type: text }
+      uid:       { type: uid }
+
+  passwordrecoverattempt:
+    tablename: passwordrecoverattempt
+    primary: email
+    options:
+        ttl: config.ttl_passwordrecoverattempt_table
+    columns:
+      email:        { type: text }
+      lastcreated:  { type: timestamp }
+
+  movieview:
+    tablename: movieview
+    primary: idmovieview
+    columns:
+      idmovieview: { type: uuid }
+      idmovie:     { type: uuid }
+      iduser:      { type: uuid }
+      created:     { type: timestamp }
+
+  log:
+    tablename: log
+    primary:   [ iduser, microcreated ]
+    columns:
+      iduser:         { type: uuid }
+      microcreated:   { type: bigint }
+      logtype:        { type: text }
+      message:        { type: text }
+      priority:       { type: int }
+
+  codecstat:
+    tablename: codecstat
+    primary: [ codec ]
+    columns:
+      codec:           { type: text }
+      probably:        { type: bigint }
+      maybe:           { type: bigint }
+      empty:           { type: bigint }
+
+  exception:
+    tablename: exception
+    options:
+        ttl: config.ttl_exception_table
+    primary:   idexception
+    columns:
+      idexception:    { type: uuid }
+      created:        { type: bigint }
+      code:           { type: int }
+      filename:       { type: text }
+      line:           { type: int }
+      stacktrace:     { type: text }
+      iduser:         { type: uuid }
+      message:        { type: text }
+      exceptiontype:  { type: text }
+      data:           { type: json }
+      exceptionlog:   { type: json }
+
+  config:
+    tablename: config
+    primary:   idconfig
+    columns:
+      idconfig:       { type: text }
+      value:          { type: json }
+
+  userbysnuid:
+    tablename: userbysnuid
+    primary: [snuid, iduser]
+    columns:
+      snuid:          { type: text }
+      iduser:         { type: uuid }
+      created:        { type: bigint }
+
+  mediaupload:
+    tablename: mediaupload
+    primary: [ iduser, idmedia ]
+    columns:
+      iduser:          { type: uuid }
+      idmedia:         { type: uuid }
+      created:         { type: timestamp }
+
+  session:
+    tablename: session
+    primary: [ idsession, item ]
+    columns:
+      idsession:       { type: text }
+      item:            { type: text }
+      value:           { type: json }
+
+  sessiontime:
+    tablename: sessiontime
+    primary: [ sessiondate, idsession ]
+    columns:
+      sessiondate:     { type: int }
+      idsession:       { type: uuid }
+      created:         { type: timestamp }
+
+  partyinvite:
+    tablename: partyinvite
+    primary: [ idpartyinvite ]
+    columns:
+      idpartyinvite:    { type: uuid }
+      iduser:           { type: uuid }
+      firstname:        { type: text }
+      lastname:         { type: text }
+      company:          { type: text }
+      occupation:       { type: text }
+      phone:            { type: text }
+      email:            { type: text }
+      confirmed:        { type: int }
+      phoneconfirmed:   { type: int }
+      phonetrycount:    { type: text }
+      fromsite:         { type: int }
+      confirmationcode: { type: text }
+      created:          { type: timestamp }
+      activated:        { type: timestamp }
+      guestfirstname:   { type: text }
+      guestlastname:    { type: text }
+      guestemail:       { type: text }
+      cantakeguest:     { type: int }
+
+  solrping:
+    tablename: solrping
+    primary: [ id ]
+    columns:
+      id:               { type: int }
+      value:            { type: text }
+
+  email:
+    tablename: email
+    primary: [ idemail ]
+    columns:
+      idemail:          { type: uuid }
+      mailfrom:         { type: text }
+      mailto:           { type: text }
+      subject:          { type: text }
+      bodytext:         { type: text }
+      bodyhtml:         { type: text }
+      created:          { type: timestamp }
+
+  movieviewstatistic:
+    tablename: movieviewstatistic
+    primary: [ idmovie ]
+    columns:
+      idmovie:          { type: uuid }
+      view0:            { type: int }
+      view10:           { type: int }
+      view25:           { type: int }
+      view50:           { type: int }
+      view75:           { type: int }
+      view100:          { type: int }
+
+  userconfig:
+    tablename: userconfig
+    primary:   [iduser, key]
+    columns:
+      iduser:         { type: uuid }
+      key:            { type: text }
+      value:          { type: json }
+
+  userlike:
+    tablename: userlike
+    primary: [iduser, likeupdated]
+    columns:
+      iduser:      { type: uuid }
+      likeupdated: { type: timestamp }
+      idmovie:     { type: uuid }
+
+  likehistory:
+    tablename: likehistory
+    primary: [idmovie, iduser]
+    columns:
+      idmovie: { type: uuid }
+      iduser:  { type: uuid }
+      created: { type: timestamp }
+      updated: { type: timestamp }
+      status:  { type: int }
+
+  genretemplate:
+    tablename: genretemplate
+    primary: [ idgenre, idtemplate ]
+    columns:
+      idgenre:          { type: int }
+      idtemplate:       { type: int }
+      name:             { type: text }
+      image:            { type: text }
+      thumbnail:        { type: text }
+      isactive:         { type: int }
+      data:             { type: text }
+      image:            { type: text }
+      thumbnail:        { type: text }
+
+  meliesinfo:
+    tablename: meliesinfo
+    primary: idmelies
+    options:
+        ttl: config.ttl_meliesinfo_table
+    columns:
+      idmelies:       { type: text }
+      weight:         { type: int }
+      process:        { type: int }
+      isactive:       { type: int }
+      created:        { type: timestamp }
+      info:           { type: json }
+      createdlastjob: { type: timestamp }
+      
+  customer:
+    tablename: customer
+    primary: idcustomer
+    columns:
+      idcustomer: { type: int }
+      name:       { type: text }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+
+
+  genrecustomer:
+    tablename: genrecustomer
+    primary: [ idcustomer, idgenre ]
+    columns:
+      idcustomer: { type: int }
+      idgenre:    { type: int }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+
+  mediauploadtemp:
+    tablename: mediauploadtemp
+    primary: idmidia
+    columns:
+      idmidia:          { type: uuid }
+      created:          { type: timestamp }
+      
+  voucher:
+    tablename: voucher
+    primary: idvoucher
+    columns:
+      idvoucher:      { type: uuid }
+      idcampaign:     { type: uuid }
+      iduser:         { type: uuid }
+      isactive:       { type: int }
+
+  user2campaign:
+    tablename: user2campaign
+    primary: iduser2campaign
+    columns:
+      iduser2campaign: { type: uuid }
+      idcustomer:      { type: int }
+      idcampaign:      { type: uuid }
+      iduser:          { type: uuid }
+      
+  campaign:
+    tablename: campaign
+    primary: [ idcustomer, idcampaign ]
+    columns:
+      idcustomer: { type: int }
+      idcampaign: { type: uuid }
+      created:    { type: timestamp }
+      startdate:  { type: timestamp }
+      enddate:    { type: timestamp }
+      data:       { type: json }
+      isactive:   { type: int }
+      slug:       { type: text }
+      title:      { type: text }
+      curation:   { type: int }
+
+  jobpending:
+    tablename: jobpending
+    primary: [ iduser, jobtype, idjob ]
+    options:
+        ttl: config.ttl_jobpending_table    
+    columns:
+      iduser:         { type: uuid }
+      jobtype:        { type: text }
+      idjob:          { type: uuid }
+      jobcreated:     { type: timestamp }
+      created:        { type: timestamp }
+      
+  timelinereference:
+    tablename: timelinereference
+    primary: [ iduser, objecttype, objectid ]
+    columns:
+      iduser:          { type: uuid }
+      objecttype:      { type: text }
+      objectid:        { type: text }      
+      timelinecreated: { type: timestamp }
+
+  moviedata:
+    tablename: moviedata
+    primary:   [idmovie, key]
+    columns:
+      idmovie:        { type: uuid }
+      key:            { type: text }
+      value:          { type: json }
+
+  userfollower:
+    tablename: userfollower
+    primary: [ iduser, idfollower ]
+    columns:
+      iduser:       { type: uuid }
+      idfollower:   { type: uuid }
+      created:      { type: timestamp }
+
+  userfollowing:
+    tablename: userfollowing
+    primary: [ iduser, idfollowing ]
+    columns:
+      iduser:       { type: uuid }
+      idfollowing:  { type: uuid }
+      created:      { type: timestamp }
+
+  campaigngenre:
+    tablename: campaigngenre
+    primary: [ idcampaign, idgenre ]
+    columns:
+      idcampaign:     { type: uuid }
+      idgenre:        { type: int }
+      created:        { type: timestamp }
+      updated:        { type: timestamp }
+      slugcampaign:   { type: text }
+      sluggenre:      { type: text }
+      genreorder:     { type: int }
+      requirevoucher: { type: int }
+
+  slugcampaign:
+    tablename: slugcampaign
+    primary: [ slug, idcampaign ]
+    columns:
+      slug:       { type: text }
+      idcampaign: { type: uuid }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+      idcustomer: { type: int }
+
+  campaignslug:
+    tablename: campaignslug
+    primary: [ idcampaign, slug ]
+    columns:
+      idcampaign: { type: uuid }
+      slug:       { type: text }
+      created:    { type: timestamp }
+      updated:    { type: timestamp }
+      idcustomer: { type: int }
+
+  campaign2movie:
+    tablename: campaign2movie
+    primary: [ idcampaign, idmovie ]
+    columns:
+      idcampaign: { type: uuid }
+      idmovie:    { type: uuid }

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Stayzen" default="build">
+
+	<property environment="env"/>
+
+	<target name="build" depends="prepare,composer,phpunit,pdepend,phpmd,phploc,phpcs,lint,phpcpd,phpcb,phpdoc,zip" />
+	<target name="build-light" depends="prepare,phpunit,pdepend,phpmd,phploc,phpcs,lint,phpcpd,phpcb,phpdoc,zip" />
+	<target name="fast" depends="prepare,zip" />
+
+	<target name="clean" description="Clean artifact">
+		<delete dir="${basedir}/gen"/>
+	</target>
+
+	<target name="prepare" depends="clean" description="prepare for build">
+		<mkdir dir="${basedir}/gen/api"/>
+		<mkdir dir="${basedir}/gen/code-browser"/>
+		<mkdir dir="${basedir}/gen/coverage"/>
+		<mkdir dir="${basedir}/gen/logs"/>
+		<mkdir dir="${basedir}/gen/pdepend"/>
+		<mkdir dir="${basedir}/gen/zen"/>
+		<mkdir dir="${basedir}/gen/artifact"/>
+	</target>
+
+	<target name="composer" description="install composer">
+		<exec executable="composer" failonerror="false">
+			<arg value="install" />
+		</exec>
+		<exec executable="composer" failonerror="false">
+			<arg value="update" />
+		</exec>
+	</target>
+
+	<target name="test" depends="phpunit-jenkins,phpunit-dev">
+		<echo message="${phpunitFile}" />
+	</target>
+
+	<target name="phpunit-jenkins" if="env.JENKINS">
+		<property name="phpunitFile" value="phpunit-jenkins.xml" />
+	</target>
+
+	<target name="phpunit-dev" unless="env.JENKINS">
+		<property name="phpunitFile" value="phpunit.xml" />
+	</target>
+
+	<target name="phpunit" depends="phpunit-jenkins,phpunit-dev" description="execute phpunit">
+		<echo message="phpunit config file : ${phpunitFile}" />
+		<exec executable="phpunit" failonerror="true">
+			<arg line="-d zend.enable_gc=0"/>
+			<arg line="-c ${phpunitFile} tests"/>
+		</exec>
+	</target>
+
+	<target name="phpdoc" description="generate phpdoc">
+		<exec executable="phpdoc">
+			<arg value="--quiet" />
+			<arg value="--directory" />
+			<arg value="${basedir}/services,${basedir}/libs" />
+			<arg value="--ignore" />
+			<arg value="${basedir}/libs/vendor/*" />
+			<arg value="--target" />
+			<arg value="${basedir}/gen/api" />
+		</exec>
+	</target>
+
+	<target name="phploc" description="Measure project size using PHPLOC">
+		<exec executable="phploc">
+			<arg value="--log-csv" />
+			<arg value="${basedir}/gen/logs/phploc.csv" />
+			<arg value="--exclude" />
+			<arg value="vendor" />
+			<arg value="--exclude" />
+			<arg value="experiment" />
+			<arg value="--exclude" />
+			<arg value="libs/vendor" />
+			<arg value="--exclude" />
+			<arg value="gen" />
+			<arg value="--exclude" />
+			<arg value="log" />
+			<arg path="${basedir}/." />
+		</exec>
+	</target>
+
+	<target name="pdepend" description="Calculate software metrics using PHP_Depend">
+		<exec executable="pdepend" failonerror="true">
+			<arg value="--jdepend-xml=${basedir}/gen/logs/jdepend.xml" />
+			<arg value="--ignore=vendor,libs/vendor,experiment,build,gen" />
+			<arg value="--jdepend-chart=${basedir}/gen/pdepend/dependencies.svg" />
+			<arg value="--overview-pyramid=${basedir}/gen/pdepend/overview-pyramid.svg" />
+			<arg path="${basedir}/." />
+		</exec>
+	</target>
+
+	<target name="phpcpd" description="Find duplicate code using PHPCPD">
+		<exec executable="phpcpd" failonerror="false">
+			<arg value="--log-pmd" />
+			<arg value="${basedir}/gen/logs/pmd-cpd.xml" />
+			<arg value="--exclude" />
+			<arg value="vendor" />
+			<arg value="--exclude" />
+			<arg value="experiment" />
+			<arg value="--exclude" />
+			<arg value="gen" />
+			<arg value="--exclude" />
+			<arg value="libs/vendor" />
+			<arg value="--exclude" />
+			<arg value="scripts" />
+			<arg value="--exclude" />
+			<arg value="log" />
+			<arg path="${basedir}/" />
+		</exec>
+	</target>
+
+	<target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer">
+		<exec executable="phpcs" failonerror="true">
+			<arg value="--report-checkstyle=${basedir}/gen/logs/checkstyle.xml" />
+			<arg value="--ignore=vendor/,gen/,build/,tests/,experiment/,migration/,scripts/,libs/vendor" />
+			<arg value="--report=full" />
+			<arg value="--standard=${basedir}/build/phpcs.xml" />
+			<arg path="${basedir}/." />
+		</exec>
+	</target>
+
+	<target name="phpmd"
+			description="Perform project mess detection using PHPMD">
+		<exec executable="phpmd" failonerror="true">
+			<arg path="services,libs" />
+			<arg value="xml" />
+			<arg value="${basedir}/build/phpmd.xml" />
+			<arg value="--exclude" />
+			<arg value="libs/vendor,gen,build,vendor,log" />
+			<arg value="--suffixes" />
+			<arg value="php" />
+		</exec>
+	</target>
+
+	<target name="phpcb"
+			description="Aggregate tool output with PHP_CodeBrowser">
+		<exec executable="phpcb">
+			<arg value="--log" />
+			<arg path="${basedir}/gen/logs" />
+			<arg value="--source" />
+			<arg path="${basedir}/." />
+			<arg value="--output" />
+			<arg path="${basedir}/gen/code-browser" />
+			<arg value="--exclude" />
+			<arg path="*vendor*" />
+			<arg value="--ignore" />
+			<arg path="gen,build,experiment,log" />
+		</exec>
+	</target>
+
+	<target name="lint">
+		<apply executable="php" failonerror="true">
+			<arg value="-l" />
+			<fileset dir="${basedir}/services">
+				<include name="**/*.php" />
+			</fileset>
+			<fileset dir="${basedir}/libs">
+				<include name="**/*.php" />
+				<exclude name="**/vendor/*" />
+			</fileset>
+		</apply>
+	</target>
+
+	<target name="parallelTasks"
+			description="Run code analysis tasks in parallel">
+		<parallel threadCount="2">
+			<sequential>
+				<antcall target="pdepend"/>
+				<antcall target="phpmd"/>
+			</sequential>
+			<antcall target="phpcpd"/>
+			<antcall target="phpcs"/>
+			<antcall target="phpdoc"/>
+			<antcall target="phploc"/>
+		</parallel>
+	</target>
+
+	<target name="zip">
+		<mkdir dir="${basedir}/gen/zen/log"/>
+		<touch file="${basedir}/gen/zen/log/log"/>
+		<exec executable="chmod" failonerror="true">
+			<arg value="777" />
+			<arg value="${basedir}/gen/zen/log" />
+		</exec>
+		<exec executable="chmod" failonerror="true">
+			<arg value="777" />
+			<arg value="${basedir}/gen/zen/log/log" />
+		</exec>
+
+		<copy todir="${basedir}/gen/zen/vendor">
+			<fileset dir="vendor" />
+		</copy>		
+		<copy todir="${basedir}/gen/zen/services">
+			<fileset dir="services" />
+		</copy>
+		<copy todir="${basedir}/gen/zen/config">
+			<fileset dir="config" />
+		</copy>
+		<copy todir="${basedir}/gen/zen/libs">
+			<fileset dir="libs" />
+		</copy>
+		<exec executable="/bin/sh">
+			<arg line='-c "git rev-parse HEAD &gt; gen/zen/COMMIT"'/>
+		</exec>
+		<copy file="bootstrap.php" todir="gen/zen"/>
+		<delete file="${basedir}/gen/zen/config/local.php"/>
+		<zip destfile="gen/artifact/zen.zip" basedir="gen/zen" />
+	</target>
+
+</project>

@@ -1,0 +1,67 @@
+{
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://packages.zendframework.com/"
+		},
+		{
+			"type": "pear",
+			"url": "http://pear.php.net"
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "kertz/twitteroauth",
+				"version": "master",
+				"source": {
+					"url": "http://github.com/kertz/twitteroauth",
+					"type": "git",
+					"reference": "master"
+				},
+				"autoload": {
+					"classmap": ["."]
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "fabianosim/php-cassandra-binary",
+				"version": "master",
+				"source": {
+					"url": "http://github.com/fabianosim/php-cassandra-binary",
+					"type": "git",
+					"reference": "master"
+				},
+				"autoload": {
+					"classmap": ["."]
+				}
+			}
+		}
+	],
+	"require": {
+		"phpmailer/phpmailer": "v5.2.7",
+		"sendgrid/sendgrid": "~1.0.0",
+		"phpunit/phpunit": "4.0.14",
+		"thobbs/phpcassa": "v1.1.0",
+	  	"fabianosim/php-cassandra-binary": "dev-master",
+		"zendframework/zend-config": "2.2.4",
+		"zendframework/zend-log": "2.2.4",
+		"zendframework/zend-console": "2.2.4",
+	    "zendframework/zend-cache": "2.2.4",
+		"solarium/solarium": "3.1.0",
+		"symfony/yaml": "v2.2.1",
+		"guzzle/guzzle": "v3.8.0",
+		"symfony/validator": "v2.2.1",
+		"microsoft/windowsazure": "*",
+		"pear-pear.php.net/http_request2": "*",
+		"pear-pear.php.net/mail_mime": "*",
+		"pear-pear.php.net/mail_mimedecode": "*",
+		"mpyw/twistoauth": "@dev",
+		"aws/aws-sdk-php": "2.*",
+		"facebook/php-sdk-v4" : "4.0.*",
+		"kertz/twitteroauth": "dev-master",
+		"gomoob/php-pushwoosh": "~0.1.0"
+	},
+	"minimum-stability": "dev"
+}

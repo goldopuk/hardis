@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="bootstrap.php">
+	<php>
+		<server name="STAYZEN_ENV" value="phpunit-dev"/>
+	</php>
+	<testsuites>
+		<testsuite name="Stayzen Suite">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
