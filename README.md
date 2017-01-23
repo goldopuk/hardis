@@ -1,73 +1,22 @@
-### Introduction
+Bonjour,
 
-Stayzen is a library that encapsulate the datababase, the business logic, the communication with others agents ofr Stayfilm.
-It is means to be used, for example, by a php MVC framework to create a website or webservices on top of that lib.
+Vous trouverez  sur Github l’arborescence et quelques fichiers de l’application Zen.
 
-### Requirements --
+Cette  application est le noyau de Stayfilm. Elle comprend la business logic du réseau social et l'accès á la base de donnée. Elle ne comprend pas le framework MVC.
 
-* php 5.3
-* php extensions : curl
-* composer
+Mes choix techniques pour l’architecture de Stayfilm furent largement conduit par l’obligation d’utiliser Codeigniter comme framework MVC. Je pensais que Symfony serai plus adapté sur le moyen et long-terme.
 
-### External dependencies
+Pour contourner le  problème, j’ai donc décidé de séparer la couche MVC (application Cool) de la couche Services (Zen) en créant deux repositories git,  pour embrasser l’idée de Separations of concern et  pour faciliter la mise en place de Test Driven Development.
 
-* phpcassa
+Stayfilm utilise comme base de donnée principale Cassandra, ce qui fut une grosse erreur comme nous nous en sommes aperçu un peu plus tard. J’estime que nous avons perdu 30% de notre temps à travailler avec une base de donnée nosql.
 
-### Installation
+J’ai dû développer un ORM maison comme couche d’abstraction d’accès á la BD, Doctrine ou Propel n’offrant pas de connecteur pour Cassandra. Gráce á cet ORM, nous avons pu migrer pour Mysql 1 an plus tard.
 
-Create the ENV file to select the correct environment
+Avec Jenkins et Ant, j’ai mis en place l’idée de Continuous Integration et mise á disposition de artefacts. L’idée était de déployer sur un serveur de tests la nouvelle version du site web, après avoir analysé le code avec une  suite d’outils (codesniffer, phpmd, pdepend etc…) et exécuté les testes unitaires. Sur ce serveur de teste étaient exécutés les tests fonctionnels automatisés (Selenium). Si tous les tests passaient, le build était considéré correct et pouvait être téléchargé pour le futur déploiement sur le serveur de staging dans le cloud Windows Azure, avant mise en production.
 
-    echo "dev" > ENV
+Si le code de Zen pourrait être nettement amélioré, clarifié et optimisé et ne suit pas toujours les bonnes pratiques notamment concernant l’autoloading,  je pense que l’architecture choisie fut plutôt une réussite.
 
-Create the log folder and set up the permission
-
-    mkdir log
-    chmod 777 log
-
-Install composer
-
-* Windows - install composer - go to composer website, download composer.exe and run it
-* Linux - go to webiste and follw instruction
-    curl -sS https://getcomposer.org/installer | php
-
-Install dependencies
-
-    php composer install (linux)
-    composer install (windows)
-
-Install git hooks (from staycool)
-	rm .git/hooks*
-	cp <staycoolpath>/scripts/hooks/* .git/hooks
+Vous trouverez en pièces jointes la structure du projet et quelques fichiers avec des exemples de codes.
 
 
-### Application Configuration
-
-The environment name defined in ENV file must have its node defined in the following configuration files:
-*  config/config.php
-
-Just copy one configuration node and rename the key to be the same as ENV file content.
-
-### Test
-There are many phpunit tests.
-To run them, just run:
-
-    ./runTest
-
-### More information
-Ask Julien !
-
-### API Documentation
-The code is documented with phpdoc
-
-### How to use it
-
-Include the file bootstrap.php into your framework
-require_once('/path/to/stayzen/bootstrap.php');
-
-To use a service, import the namespace and ask an instance of the service
-
-    :::php
-    use \Stayfilm\stayzen\services\UserService;
-    $userServ = UserService::getInstance();
-    $user = $userServ->getUserByUsername('toto@gmail.com');
-
+Voila,
